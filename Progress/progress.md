@@ -26,4 +26,6 @@ Directories - yee-light
 final vars/Environment vars - YEE_LIGHT
 
 
-##
+## To run web services :-
+
+- run cmd - "npm run devStart" in terminal

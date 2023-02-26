@@ -73,7 +73,6 @@ scene = SceneClass().color_flow(1, 0, "1000,2,2700,100,500,1,255,10,500,1,167116
 bulb.start_flow(scene)
 
 print(attributes.rgbv)
-sys.stdout.flush()
 
 
 
@@ -87,3 +86,4 @@ setColor(attributes.rgbv)
 # setColorFlow()
 #yeeSleep(1)
 
+sys.stdout.flush()
