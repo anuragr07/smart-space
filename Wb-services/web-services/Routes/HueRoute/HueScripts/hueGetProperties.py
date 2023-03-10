@@ -1,7 +1,17 @@
 from phue import Bridge
+# import os
+# from dotenv import load_dotenv
+# from pathlib import Path
+
+# dotenv_path = Path('.env')
+# load_dotenv(dotenv_path=dotenv_path)
+
+
 
 # IP address of your Philips Hue bridge
-bridge_ip = '10.0.0.4'
+bridge_ip = '10.0.0.3'
+
+print(bridge_ip)
 
 # API username
 api_username = 'HVmL3Zatw2OdLFfUtpfp9Em33HAoganA59w0vaDj'

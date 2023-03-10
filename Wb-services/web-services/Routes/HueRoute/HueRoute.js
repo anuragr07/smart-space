@@ -89,11 +89,11 @@ router.post('/setColor', (req, res) => {
     const setColorScriptPath = scriptPath + 'hueColor.py';
     
     // Script vars
-    const briVal = '20';
+    const briVal = '100';
     const lightId = '1';
 
     // create list of vars
-    let scriptVarsList = [offScriptPath, briVal, lightId]
+    let scriptVarsList = [setColorScriptPath, briVal, lightId]
     
     // Run script
     response = runScript(scriptVarsList);

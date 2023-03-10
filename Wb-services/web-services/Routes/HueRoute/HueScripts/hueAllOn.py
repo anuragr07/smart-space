@@ -1,7 +1,7 @@
 from phue import Bridge
 
 # IP address of your Philips Hue bridge
-bridge_ip = '10.0.0.4'
+bridge_ip = '10.0.0.3'
 
 # API username
 api_username = 'HVmL3Zatw2OdLFfUtpfp9Em33HAoganA59w0vaDj'
