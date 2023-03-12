@@ -1,6 +1,8 @@
+# For logging errors
 import logging
 logging.basicConfig()
 
+# Imports
 import sys
 from phue import Bridge
 
