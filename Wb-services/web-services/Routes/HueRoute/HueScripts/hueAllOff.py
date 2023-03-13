@@ -1,7 +1,11 @@
 from phue import Bridge
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # IP address of your Philips Hue bridge
-bridge_ip = '10.0.0.4'
+bridge_ip = os.getenv('HUE_IP')
 
 # API username
 api_username = 'HVmL3Zatw2OdLFfUtpfp9Em33HAoganA59w0vaDj'
@@ -15,4 +19,3 @@ light_ids = [1,2,3]
 # Turn on the light
 for light_id in light_ids:
     b.set_light(light_id, 'on', False)
-

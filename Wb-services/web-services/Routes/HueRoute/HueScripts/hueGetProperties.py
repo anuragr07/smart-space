@@ -29,4 +29,3 @@ for light in lights:
     print(light.brightness)
     print(light.xy)
     print(light.light_id) 
-    print(light.light_id) 

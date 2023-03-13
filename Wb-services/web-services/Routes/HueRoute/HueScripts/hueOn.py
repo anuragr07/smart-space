@@ -1,3 +1,9 @@
+# For logging errors
+import logging
+logging.basicConfig()
+
+# Imports
+import sys
 from phue import Bridge
 
 # IP address of your Philips Hue bridge
@@ -10,7 +16,10 @@ api_username = 'HVmL3Zatw2OdLFfUtpfp9Em33HAoganA59w0vaDj'
 b = Bridge(bridge_ip, username=api_username)
 
 # Get the ID of the light you want to turn on
-light_id = 1
+# light_id = 1
+light_id = int(sys.argv[2])
 
 # Turn on the light
 b.set_light(light_id, 'on', True)
+
+sys.stdout.flush()

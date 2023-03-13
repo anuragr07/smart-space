@@ -8,82 +8,44 @@ router.get('/', (req, res) => {
     // TODO: return status of the light(s) in res
 })
 
-router.get('/toggle', (req, res) => {
-    // TODO: Turn on/off the light(S)
-    // TODO: return the status of the light(s)
-    let responseFromScript;
-
-    // Arguments values
-    // change these values to dynamic using the request params
-    const briVal = '20';
-    const lightId = '1'
-
-    const offScriptPath = scriptPath + 'hueAllToggle.py';
-
-    // arg 1 - Brightness value, arg 2 - light id
-    const script = spawn('python', [offScriptPath, briVal, lightId]);
-
-    script.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        responseFromScript=data;
-    });
-
-    script.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-    });
-
-    script.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-        
-        const obj = {
-            response: String(responseFromScript)
-        }
-        res.send(obj)
-    });
-    
-})
-
+// Turn on all lights
 router.get('/allOn', (req, res) => {
+    // Script path
+    const allOnScriptPath = scriptPath + 'hueAllOn.py';
     
-    let data1;
-    const onScriptPath = scriptPath + 'hueAllOn.py';
-    const script = spawn('python', [onScriptPath]);
+    // Script vars
+    // No vars needed
 
-    script.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        data1=data;
-    });
-
-    script.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-    });
-
-    script.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-        res.send("Hello1")
-    });
+    // create list of vars
+    let scriptVarsList = [allOnScriptPath]
+    
+    // Run script
+    response = runScript(scriptVarsList);
+    
+    // Send response
+    res.send(response);
 })
 
+// Turn off all lights
 router.get('/allOff', (req, res) => {
-    let data1;
-    const offScriptPath = scriptPath + 'hueAllOff.py';
-    const script = spawn('python', [offScriptPath]);
+    // Script path
+    const allOffScriptPath = scriptPath + 'hueAllOff.py';
+    
+    // Script vars
+    // No vars needed
 
-    script.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        data1=data;
-    });
-
-    script.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-    });
-
-    script.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-        res.send("Hello1")
-    });
+    // create list of vars
+    let scriptVarsList = [allOffScriptPath]
+    
+    // Run script
+    response = runScript(scriptVarsList);
+    
+    // Send response
+    res.send(response);
 })
 
+// Set Color Route -
+// this should set the brightness and color
 router.post('/setColor', (req, res) => {
     // Script path
     const setColorScriptPath = scriptPath + 'hueColor.py';
@@ -92,6 +54,7 @@ router.post('/setColor', (req, res) => {
     const briVal = '100';
     const lightId = '1';
 
+    // arg 1 - Brightness value, arg 2 - light id
     // create list of vars
     let scriptVarsList = [setColorScriptPath, briVal, lightId]
     
@@ -102,77 +65,64 @@ router.post('/setColor', (req, res) => {
     res.send(response);
 })
 
-// router.post('/setColor', (req, res) => {
-//     // TODO: receive attributes from the req
-//     // TODO: Set color of the light(s)
-//     let responseFromScript;
+// Toggle all lights
+router.get('/toggle', (req, res) => {
+    // Script path
+    const toggleScriptPath = scriptPath + 'hueAllToggle.py'
 
-//     // Arguments values
-//     // change these values to dynamic using the request params
-//     const briVal = '20';
-//     const lightId = '1'
+    // Script vars
+    // No vars needed
 
-//     const offScriptPath = scriptPath + 'hueColor.py';
+    // create list of vars
+    let scriptVarsList = [toggleScriptPath]
+    
+    // Run script
+    response = runScript(scriptVarsList);
+    
+    // Send response
+    res.send(response);
+})
 
-//     // arg 1 - Brightness value, arg 2 - light id
-//     const script = spawn('python', [offScriptPath, briVal, lightId]);
+// Toggle one lights
+router.get('/toggle/:id', (req, res) => {
+    // Script path
+    const toggleScriptPath = scriptPath + 'hueToggle.py'
 
-//     script.stdout.on('data', (data) => {
-//         console.log(`stdout: ${data}`);
-//         responseFromScript=data;
-//     });
+    // Script vars
+    const lightId = req.params.id;
 
-//     script.stderr.on('data', (data) => {
-//         console.error(`stderr: ${data}`);
-//     });
+    // create list of vars
+    let scriptVarsList = [toggleScriptPath, lightId]
+    
+    // Run script
+    response = runScript(scriptVarsList);
+    
+    // Send response
+    res.send(response);
+})
 
-//     script.on('close', (code) => {
-//         console.log(`child process exited with code ${code}`);
-        
-//         const obj = {
-//             response: String(responseFromScript)
-//         }
-//         res.send(obj)
-//     });
-// })
+// Turn on one light
+router.post('on/:id', (req, res) => {
+    // Script path
+    const onScriptPath = scriptPath + 'hueOne.py'
 
-// We'll use this function for every request
-// function runScript() {
-//     let responseFromScript;
+    // Script vars
+    const lightId = req.params.id;
 
-//     // Arguments values
-//     // change these values to dynamic using the request params
-//     const briVal = '20';
-//     const lightId = '1'
+    // create list of vars
+    let scriptVarsList = [onScriptPath, lightId]
+    
+    // Run script
+    response = runScript(scriptVarsList);
+    
+    // Send response
+    res.send(response);
+})
 
-//     const offScriptPath = scriptPath + 'hueColor.py';
-
-//     // arg 1 - Brightness value, arg 2 - light id
-//     const script = spawn('python', [offScriptPath, briVal, lightId]);
-
-//     script.stdout.on('data', (data) => {
-//         console.log(`stdout: ${data}`);
-//         responseFromScript=data;
-//     });
-
-//     script.stderr.on('data', (data) => {
-//         console.error(`stderr: ${data}`);
-//     });
-
-//     script.on('close', (code) => {
-//         console.log(`child process exited with code ${code}`);
-        
-//         const obj = {
-//             response: String(responseFromScript)
-//         }
-//         res.send(obj)
-//     });
-// }
-
+// Run the python script
 function runScript(scriptParamsList) {
     let responseFromScript;
 
-    // arg 1 - Brightness value, arg 2 - light id
     const script = spawn('python', scriptParamsList);
 
     script.stdout.on('data', (data) => {

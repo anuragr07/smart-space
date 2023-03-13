@@ -6,7 +6,7 @@
 - nodemon
 
 ## OS python modules
-
+- sudo pip3 install python-dotenv
 
 
 ## Backend exttra node modules used
