@@ -96,14 +96,18 @@ function runScript(scriptParamsList) {
         console.error(`stderr: ${data}`);
     });
 
+    let obj;
+
     script.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
         
-        const obj = {
+        obj = {
             response: String(responseFromScript)
         }
-        res.send(obj)
+        
     });
+
+    return obj;
 }
 
 
