@@ -35,3 +35,5 @@ print(f"Current:  A")
 print(f"Total energy consumption:  kWh")
 
 sys.stdout.flush()
+
+sys.stdout.flush()

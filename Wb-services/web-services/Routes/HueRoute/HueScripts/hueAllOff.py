@@ -25,3 +25,12 @@ try:
 except Exception as e:
     # Handle the error here
     print(f"Error occurred: {e}")
+
+try:
+    # Turn on the light
+    for light_id in light_ids:
+        b.set_light(light_id, 'on', False)
+    print(f"Turned off all lights")
+except Exception as e:
+    # Handle the error here
+    print(f"Error occurred: {e}")
