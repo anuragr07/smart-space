@@ -1,7 +1,11 @@
 from phue import Bridge
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # IP address of your Philips Hue bridge
-bridge_ip = '10.0.0.3'
+bridge_ip = os.getenv('HUE_IP')
 
 # API username
 api_username = 'HVmL3Zatw2OdLFfUtpfp9Em33HAoganA59w0vaDj'
@@ -13,8 +17,10 @@ b = Bridge(bridge_ip, username=api_username)
 light_ids = [1,2,3]
 
 # Turn on the light
-for light_id in light_ids:
-    b.set_light(light_id, 'on', True)
-
-print("Turned on")
-
+try:
+    for light_id in light_ids:
+        b.set_light(light_id, 'on', True)
+    print(f"Turned on all lights")
+except Exception as e:
+    # Handle the error here
+    print(f"Error occured: {e}")

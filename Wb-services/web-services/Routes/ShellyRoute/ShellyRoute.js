@@ -2,18 +2,20 @@ const express = require('express')
 const router = express.Router()
 const {spawn} = require('child_process')
 
-const scriptPath = 'Routes/YeeRoute/YeeScripts/';
+const scriptPath = 'Routes/ShellyRoute/ShellyScripts/';
 
-// --- Code to run the scripts ---
+// ------ Code to run the shelly scripts -------
 router.get('/', (req, res) => {
     // this is to get the status of the light
     // might include some data as well in it
     
 })
 
+// TODO: Use these funcions along with the id of the device from db
+// ---------------- TURN ON/OFF ---------------------
 router.get('/toggle', (req, res) => {
     // Script path
-    const toggleScriptPath = scriptPath + 'yeeToggle.py'
+    const toggleScriptPath = scriptPath + 'ShellyToggle.py'
 
     // Script vars
     // const lightId = req.params.id;
@@ -29,16 +31,51 @@ router.get('/toggle', (req, res) => {
     })
 })
 
-router.post('/setColor', (req, res) => {
+router.post('/on', (req, res) => {
     // Script path
-    const changeColorScriptPath = scriptPath + 'yeeColorChange.py'
-    
+    const turnOnScriptPath = scriptPath + 'ShellyOn.py'
+
     // Script vars
     // const lightId = req.params.id;
-    const rgbv = [255, 255, 0]
     
     // create list of vars
-    let scriptVarsList = [changeColorScriptPath, rgbv]
+    let scriptVarsList = [turnOnScriptPath]
+    
+    // Run script
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })    
+})
+
+router.post('/off', (req, res) => {
+    // Script path
+    const turnOffScriptPath = scriptPath + 'ShellyOff.py'
+
+    // Script vars
+    // const lightId = req.params.id;
+    
+    // create list of vars
+    let scriptVarsList = [turnOffScriptPath]
+    
+    // Run script
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })    
+})
+
+router.get('/printLines', (req, res) => {
+    // Script path
+    const turnOffScriptPath = scriptPath + 'ShellyEnergy.py'
+
+    // Script vars
+    // const lightId = req.params.id;
+    
+    // create list of vars
+    let scriptVarsList = [turnOffScriptPath]
     
     // Run script
     runScript(scriptVarsList)
@@ -47,42 +84,8 @@ router.post('/setColor', (req, res) => {
         res.send(response)
     })
 })
+// ------------------- TURN ON/OFF ENDS ---------------
 
-router.post('/setBrightness', (req, res) => {
-    // Script path
-    const brightnessScriptPath = scriptPath + 'yeeBrightnessChange.py'
-    
-    // Script vars
-    // const lightId = req.params.id;
-    const bright = [255, 255, 0]
-    
-    // create list of vars
-    let scriptVarsList = [brightnessScriptPath, bright]
-    
-    // Run script
-    runScript(scriptVarsList)
-    .then((response) => {
-        // Send Response
-        res.send(response)
-    })
-})
-
-router.post('/setScene', (req, res) => {
-
-    // run the script to set scene of the room
-
-})
-
-
-
-// This code will be used to get the status of specific yee light, with id
-router.get('/:id', (req, res) => {
-    let id = req.params.id;
-
-    // do stuff with the id of the yee light
-
-
-})
 
 // Run the python script
 function runScript(scriptParamsList) {
@@ -104,10 +107,7 @@ function runScript(scriptParamsList) {
         resolve(responseFromScript);
       });
     });
-  }
-
-
-// --- Code for CRUD operations of the yee light ---
+}
 
 
 module.exports = router

@@ -20,12 +20,11 @@ router.get('/allOn', (req, res) => {
     let scriptVarsList = [allOnScriptPath]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    console.log(response);
-
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Turn off all lights
@@ -42,11 +41,10 @@ router.get('/allOff', (req, res) => {
     // Run script
     runScript(scriptVarsList)
     .then((response) => {
+        // Send Response
         res.send(response)
     })
     
-    // Send response
-    // res.send(response);
 })
 
 // Set Color Route -
@@ -64,10 +62,11 @@ router.post('/setColor', (req, res) => {
     let scriptVarsList = [setColorScriptPath, briVal, lightId]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Toggle all lights
@@ -82,10 +81,11 @@ router.get('/toggle', (req, res) => {
     let scriptVarsList = [toggleScriptPath]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Toggle one lights
@@ -100,10 +100,11 @@ router.get('/toggle/:id', (req, res) => {
     let scriptVarsList = [toggleScriptPath, lightId]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Turn on one light
@@ -118,10 +119,11 @@ router.post('on/:id', (req, res) => {
     let scriptVarsList = [onScriptPath, lightId]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Run the python script

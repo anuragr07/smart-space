@@ -1,5 +1,5 @@
 import requests
-
+import sys
 # set the IP address of your Shelly smart plug
 shelly_ip = "10.0.0.2"
 
@@ -24,7 +24,14 @@ current = data["result"]["current"]
 aenergy_total = data["result"]["aenergy"]["total"]
 
 # print energy consumption data
-# print(f"Current power consumption: {power} W")
-# print(f"Voltage: {voltage} V")
-# print(f"Current: {current} A")
-# print(f"Total energy consumption: {aenergy_total} kWh")
+print(f"Current power consumption: {power} W")
+print(f"Voltage: {voltage} V")
+print(f"Current: {current} A")
+print(f"Total energy consumption: {aenergy_total} kWh")
+
+print(f"Current power consumption:  W")
+print(f"Voltage:  V")
+print(f"Current:  A")
+print(f"Total energy consumption:  kWh")
+
+sys.stdout.flush()

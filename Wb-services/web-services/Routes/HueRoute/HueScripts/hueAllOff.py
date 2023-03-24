@@ -17,10 +17,11 @@ b = Bridge(bridge_ip, username=api_username)
 # Get the ID of the light you want to turn on
 light_ids = [1,2,3]
 
-# Turn on the light
-for light_id in light_ids:
-    b.set_light(light_id, 'on', False)
-
-print("Turned off")
-
-sys.stdout.flush()
+try:
+    # Turn on the light
+    for light_id in light_ids:
+        b.set_light(light_id, 'on', False)
+    print(f"Turned off all lights")
+except Exception as e:
+    # Handle the error here
+    print(f"Error occurred: {e}")
