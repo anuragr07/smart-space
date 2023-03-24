@@ -1,6 +1,7 @@
 from phue import Bridge
 import os
 from dotenv import load_dotenv, find_dotenv
+import sys;
 
 load_dotenv(find_dotenv())
 
@@ -19,3 +20,7 @@ light_ids = [1,2,3]
 # Turn on the light
 for light_id in light_ids:
     b.set_light(light_id, 'on', False)
+
+print("Turned off")
+
+sys.stdout.flush()

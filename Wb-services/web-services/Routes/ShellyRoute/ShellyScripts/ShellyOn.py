@@ -2,7 +2,7 @@ import requests
 import json
 
 # set the IP address of your Shelly device
-shelly_ip = "10.0.0.8"
+shelly_ip = "10.0.0.2"
 
 # set the URL for the Switch.Set method
 url = f"http://{shelly_ip}/rpc"

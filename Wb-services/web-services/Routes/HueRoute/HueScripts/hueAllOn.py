@@ -16,3 +16,5 @@ light_ids = [1,2,3]
 for light_id in light_ids:
     b.set_light(light_id, 'on', True)
 
+print("Turned on")
+

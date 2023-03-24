@@ -22,6 +22,8 @@ router.get('/allOn', (req, res) => {
     // Run script
     response = runScript(scriptVarsList);
     
+    console.log(response);
+
     // Send response
     res.send(response);
 })
@@ -38,10 +40,13 @@ router.get('/allOff', (req, res) => {
     let scriptVarsList = [allOffScriptPath]
     
     // Run script
-    response = runScript(scriptVarsList);
+    runScript(scriptVarsList)
+    .then((response) => {
+        res.send(response)
+    })
     
     // Send response
-    res.send(response);
+    // res.send(response);
 })
 
 // Set Color Route -
@@ -121,27 +126,24 @@ router.post('on/:id', (req, res) => {
 
 // Run the python script
 function runScript(scriptParamsList) {
-    let responseFromScript;
-
-    const script = spawn('python', scriptParamsList);
-
-    script.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        responseFromScript=data;
-    });
-
-    script.stderr.on('data', (data) => {
+    return new Promise((resolve, reject) => {
+      const script = spawn('python', scriptParamsList);
+      let responseFromScript = '';
+  
+      script.stdout.on('data', (data) => {
+        responseFromScript += data.toString();
+      });
+  
+      script.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
-    });
-
-    script.on('close', (code) => {
+        reject(data);
+      });
+  
+      script.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-        
-        const obj = {
-            response: String(responseFromScript)
-        }
-        res.send(obj)
+        resolve(responseFromScript);
+      });
     });
-}
+  }
 
 module.exports = router
