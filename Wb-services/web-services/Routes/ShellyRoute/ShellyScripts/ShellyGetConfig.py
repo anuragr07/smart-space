@@ -1,7 +1,11 @@
 import requests
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # set the IP address of your Shelly smart plug
-shelly_ip = "10.0.0.8"
+shelly_ip = os
 
 # retrieve current energy consumption data
 url = f"http://{shelly_ip}/rpc"

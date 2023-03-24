@@ -5,9 +5,13 @@ logging.basicConfig()
 # Imports
 import sys
 from phue import Bridge
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # IP address of your Philips Hue bridge
-bridge_ip = '10.0.0.3'
+bridge_ip = os.getenv('HUE_IP')
 
 # API username
 api_username = 'HVmL3Zatw2OdLFfUtpfp9Em33HAoganA59w0vaDj'
@@ -26,6 +30,5 @@ b.set_light(light_id, 'bri', int(sys.argv[1]))
 # Set the color to red (using xy coordinates)
 # b.set_light(light_id, 'xy', [0.675, 0.322])
 
-print(type(light_id))
 
 sys.stdout.flush()

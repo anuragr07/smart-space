@@ -20,10 +20,11 @@ router.get('/allOn', (req, res) => {
     let scriptVarsList = [allOnScriptPath]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Turn off all lights
@@ -38,10 +39,12 @@ router.get('/allOff', (req, res) => {
     let scriptVarsList = [allOffScriptPath]
     
     // Run script
-    response = runScript(scriptVarsList);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
     
-    // Send response
-    res.send(response);
 })
 
 // Set Color Route -
@@ -59,10 +62,11 @@ router.post('/setColor', (req, res) => {
     let scriptVarsList = [setColorScriptPath, briVal, lightId]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Toggle all lights
@@ -77,10 +81,11 @@ router.get('/toggle', (req, res) => {
     let scriptVarsList = [toggleScriptPath]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Toggle one lights
@@ -95,10 +100,11 @@ router.get('/toggle/:id', (req, res) => {
     let scriptVarsList = [toggleScriptPath, lightId]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Turn on one light
@@ -113,34 +119,32 @@ router.post('on/:id', (req, res) => {
     let scriptVarsList = [onScriptPath, lightId]
     
     // Run script
-    response = runScript(scriptVarsList);
-    
-    // Send response
-    res.send(response);
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send Response
+        res.send(response)
+    })
 })
 
 // Run the python script
 function runScript(scriptParamsList) {
-    let responseFromScript;
-
-    const script = spawn('python', scriptParamsList);
-
-    script.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        responseFromScript=data;
-    });
-
-    script.stderr.on('data', (data) => {
+    return new Promise((resolve, reject) => {
+      const script = spawn('python', scriptParamsList);
+      let responseFromScript = '';
+  
+      script.stdout.on('data', (data) => {
+        responseFromScript += data.toString();
+      });
+  
+      script.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
-    });
-
-    script.on('close', (code) => {
+        reject(data);
+      });
+  
+      script.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-        
-        const obj = {
-            response: String(responseFromScript)
-        }
-        res.send(obj)
+        resolve(responseFromScript);
+      });
     });
 }
 
