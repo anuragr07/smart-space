@@ -36,3 +36,11 @@ final vars/Environment vars - YEE_LIGHT
 - Nodemon - 2.0.20
 - Node - 10.24.0
 - Npm - 5.8.0
+
+## Steps to do after github pull
+- npm install - install all the modules from the package.json
+- npm run devStart - Start web services
+
+## API calls
+- User API calls
+ - lo

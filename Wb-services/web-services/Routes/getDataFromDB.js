@@ -6,7 +6,7 @@ async function getDataFromDB() {
     const db = await connectDB();
 
     // Fetch data from the database
-    const data = await db.collection('Rooms').findOne({});
+    const data = await db.collection('Profile').findOne();
     console.log(data);
 
     // Return the fetched data
