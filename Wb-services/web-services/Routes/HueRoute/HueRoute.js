@@ -1,11 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const {spawn} = require('child_process')
+const {spawn} = require('child_process');
+const { response } = require('express');
 
 const scriptPath = 'Routes/HueRoute/HueScripts/';
 
-router.get('/', (req, res) => {
+router.get('/props', (req, res) => {
     // TODO: return status of the light(s) in res
+    const propScriptPath = scriptPath + "hueGetProperties.py";
+    
+    let scriptVarsList = [propScriptPath]
+
+    runScript(scriptVarsList)
+    .then((response) => {
+        res.status(200).json(response)
+    })
 })
 
 // Turn on all lights

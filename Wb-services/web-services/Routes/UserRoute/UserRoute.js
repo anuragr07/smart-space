@@ -4,6 +4,6 @@ var bodyParser = require('body-parser');
 var controller = require("../../Controllers/UserController")
 
 router.get('/:id', controller.getOneUser);
-router.post('/login/:username&', controller.userLogin);
+router.post('/login/:user/:pass', controller.userLogin);
 
 module.exports = router
