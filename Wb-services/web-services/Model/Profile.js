@@ -12,8 +12,8 @@ const profileSchema = new mongoose.Schema({
       ip: { type: String, required: true },
       settings: [{
         On: { type: String, required: true },
-        Brightness: { type: Number, required: true },
-        Hue: { type: Number, required: true },
+        Brightness: { type: Number, required: true }, // POST req to update db
+        Hue: { type: Number, required: true }, 
         Saturation: { type: Number, required: true },
         "XY color": [{ type: Number, required: true }],
         Alert: { type: String, required: true },
