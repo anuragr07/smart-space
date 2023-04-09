@@ -11,21 +11,24 @@ from Yee_Attributes import YeeAttributes
 
 
 import yeelight
-print(yeelight.__version__)
+# print(yeelight.__version__)
 
 # from yeelight import SceneClass
 
+number_of_yee_bulbs = discover_bulbs()
+if number_of_yee_bulbs:
+    first_bulb = number_of_yee_bulbs[0]
+    ip_address = first_bulb["ip"]
+    attributes = YeeAttributes()
 
-number_of_yee_bulbs=discover_bulbs()
-first_bulb=number_of_yee_bulbs[0]
-ip_address=first_bulb["ip"]
-attributes=YeeAttributes()
+    def findBulbs():
+        list=discover_bulbs()
+        print(list)
+else:
+    print("No Yee bulbs were found on the network.")
 
 bulb = Bulb(ip_address, auto_on=True)
 
-def findBulbs():
-    list=discover_bulbs()
-    print(list)
 
 # def setColor(x):
 #     bulb.set_rgb(x[0], x[1], x[2])
@@ -64,8 +67,8 @@ def toggleSwitch():
 # #     )
 # #     bulb.start_flow(flow)
 
-def bulbScene(x):
-    bulb.set_scene("romantic")
+# def bulbScene(x):
+#     bulb.set_scene("romantic")
 
 # # # scene = SceneClass().color_flow(1, 0, "1000,2,2700,100,500,1,255,10,500,1,16711680,100")
 

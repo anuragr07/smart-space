@@ -1,7 +1,7 @@
 import requests
 import sys
 # set the IP address of your Shelly smart plug
-shelly_ip = "10.0.0.2"
+shelly_ip = "10.0.0.217"
 
 # retrieve current energy consumption data
 url = f"http://{shelly_ip}/rpc"
@@ -29,10 +29,10 @@ print(f"Voltage: {voltage} V")
 print(f"Current: {current} A")
 print(f"Total energy consumption: {aenergy_total} kWh")
 
-print(f"Current power consumption:  W")
-print(f"Voltage:  V")
-print(f"Current:  A")
-print(f"Total energy consumption:  kWh")
+# print(f"Current power consumption:  W")
+# print(f"Voltage:  V")
+# print(f"Current:  A")
+# print(f"Total energy consumption:  kWh")
 
 sys.stdout.flush()
 
