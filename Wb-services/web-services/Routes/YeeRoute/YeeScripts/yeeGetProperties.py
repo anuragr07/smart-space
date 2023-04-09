@@ -12,7 +12,6 @@ import json
 
 
 import yeelight
-print(yeelight.__version__)
 
 # convert rgb to rgbv
 def getRGBList(rgb_string):
@@ -25,7 +24,6 @@ def getRGBList(rgb_string):
 number_of_yee_bulbs=discover_bulbs()
 first_bulb=number_of_yee_bulbs[0]
 ip_address=first_bulb["ip"]
-print (ip_address)
 bulb = Bulb(ip_address, auto_on=True)
 properties = bulb.get_properties()
 
