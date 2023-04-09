@@ -1,4 +1,6 @@
 const Profile = require("../Model/Profile")
+const API_IP='174.6.73.177:3000'
+const axios = require('axios')
 
 exports.getProfileByUserId = async (req, res) => {
     try {
@@ -7,47 +9,53 @@ exports.getProfileByUserId = async (req, res) => {
 
 
         const rooms = profile.room;
-        console.log(req.params.device);
         try {
             // Loop for rooms
             for (let i = 0; i < rooms.length; i++) {
 
-                // To get the room from the API call
-                if (rooms[i].room_name === req.params.roomname) {
+                
+                // To get the device from the room
+                const devices = rooms[i].device;
+                let deviceProps;
+                for (let j = 0; j < devices.length; j++) {
+                    switch (devices[j].device_name) {
+                        case "Shelly Smart Plug-1": 
+                            axios.get(`https://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`)
+                            .then((response) => {
+                                console.log(response);
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            })
+                            // console.log(deviceProps);
+                            break;
 
-                    // To get the device from the room
-                    const devices = rooms[i].device;
-                    for (let j = 0; j < devices.length; j++) {
-                        switch (devices[j].device_name) {
-                            case "Shelly Smart Plug-1": 
-                                
-                                break;
+                        case "Shelly Smart Plug-2":
+                            deviceProps = `https://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`
+                            console.log(deviceProps);
+                            break;
 
-                            case "Shelly Smart Plug-2":
-
-                                break;
-
-                            case "Hue Light-1":
-                                const hueProps = axios.get("https://176.")
-                                break;
-                            
-                            case "Hue Light-2":
+                        case "Hue Light-1":
+                            const hueProps = axios.get("https://176.")
+                            break;
                         
-                                break;
+                        case "Hue Light-2":
+                    
+                            break;
 
-                            case "Hue Light-3":
-                        
-                                break;
+                        case "Hue Light-3":
+                    
+                            break;
 
-                            case "Yeelight Bulb":
+                        case "Yeelight Bulb":
 
-                                break;
+                            break;
 
-                            default: 
-                                break;
-                        }
+                        default: 
+                            break;
                     }
                 }
+            
             }
         } catch (error) {
             return res.status(404).json({ eror: error })
