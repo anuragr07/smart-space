@@ -83,15 +83,20 @@ router.get('/printLines', (req, res) => {
         // Send Response
         res.send(response)
     })
+    .catch((error) => {
+        res.status(401).send(error)
+    })
 })
 
 // Change this according to the id passed
-router.get('/status', (req, res) => {
+router.get('/status/:name', (req, res) => {
     // Script path
-    const configScriptPath = scriptPath + 'ShellyConfigStatus.py'
+    const configScriptPath = scriptPath + 'ShellyGetConfig.py'
+
+    const plugName= req.params.name;
 
     // Script vars
-    let scriptVarsList = [configScriptPath]
+    let scriptVarsList = [configScriptPath, plugName]
 
     // Run script
     runScript(scriptVarsList)

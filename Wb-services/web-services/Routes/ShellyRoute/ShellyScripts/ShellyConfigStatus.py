@@ -6,7 +6,7 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 # set the IP address of your Shelly smart plug
-shelly_ip = '10.0.0.217'
+shelly_ip = '10.0.0.250'
 
 rpc_command = '{"jsonrpc": "2.0", "id": 1, "method": "Switch.GetStatus", "params": {id:0}}'
 
