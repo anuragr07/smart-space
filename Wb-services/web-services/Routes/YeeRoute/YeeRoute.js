@@ -29,6 +29,24 @@ router.get('/toggle', (req, res) => {
     })
 })
 
+router.get('/props/:name', (req, res) => {
+  // Script path
+  const getPropsScriptPath = scriptPath + 'yeeGetProperties.py'
+
+  // Script vars
+  const lightName = req.params.name
+  
+  // create list of vars
+  let scriptVarsList = [getPropsScriptPath, lightName]
+  
+  // Run script
+  runScript(scriptVarsList)
+  .then((response) => {
+      // Send Response
+      res.send(response)
+  })
+})
+
 router.post('/setColor', (req, res) => {
     // Script path
     const changeColorScriptPath = scriptPath + 'yeeColorChange.py'
@@ -87,7 +105,7 @@ router.get('/:id', (req, res) => {
 // Run the python script
 function runScript(scriptParamsList) {
     return new Promise((resolve, reject) => {
-      const script = spawn('python', scriptParamsList);
+      const script = spawn('python3', scriptParamsList);
       let responseFromScript = '';
   
       script.stdout.on('data', (data) => {

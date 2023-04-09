@@ -70,17 +70,23 @@ try:
                 device_id = 3
             return device_id
 
+        if light.on:
+            status = "On"
+        if light.on != True:
+            status = "Off"
+
         # props of hue light
         props = {
-            'device_id': getDeviceId(light.name),
-            'device_name': light.name,
-            'status': str(light.on),
-            'settings': {
-                'Brightness': str(light.brightness),
-                'rgbv': rgb
+            "device_id": getDeviceId(light.name),
+            "device_name": light.name,
+            "status": status,
+            "ip": bridge_ip,
+            "settings": {
+                "Brightness": light.brightness,
+                "rgbv": rgb
             }
-            
         }
+
         # props = props + "{name:" + light.name
         # props = props + ",status:" + str(light.on)
         # props = props + ",ip:" + bridge_ip
