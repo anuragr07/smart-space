@@ -11,9 +11,7 @@ from Yee_Attributes import YeeAttributes
 
 
 import yeelight
-print(yeelight.__version__)
 
-# from yeelight import SceneClass
 
 
 number_of_yee_bulbs=discover_bulbs()
