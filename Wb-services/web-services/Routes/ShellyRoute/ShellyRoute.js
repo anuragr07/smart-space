@@ -112,7 +112,7 @@ router.get('/status/:name', (req, res) => {
 // Run the python script
 function runScript(scriptParamsList) {
     return new Promise((resolve, reject) => {
-      const script = spawn('python', scriptParamsList);
+      const script = spawn('python3', scriptParamsList);
       let responseFromScript = '';
   
       script.stdout.on('data', (data) => {
