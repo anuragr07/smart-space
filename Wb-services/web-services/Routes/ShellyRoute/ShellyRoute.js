@@ -84,6 +84,23 @@ router.get('/printLines', (req, res) => {
         res.send(response)
     })
 })
+
+// Change this according to the id passed
+router.get('/status', (req, res) => {
+    // Script path
+    const configScriptPath = scriptPath + 'ShellyConfigStatus.py'
+
+    // Script vars
+    let scriptVarsList = [configScriptPath]
+
+    // Run script
+    runScript(scriptVarsList)
+    .then((response) => {
+        // Send response
+        res.setHeader('Content-Type', 'application/json')
+        res.send(response)
+    })
+})
 // ------------------- TURN ON/OFF ENDS ---------------
 
 

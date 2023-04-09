@@ -13,7 +13,22 @@ router.get('/props', (req, res) => {
 
     runScript(scriptVarsList)
     .then((response) => {
-        res.status(200).json(response)
+        res.setHeader('Content-Type', 'application/json')
+        res.send(response)
+    })
+})
+
+router.get('/props/:level', (req, res) => {
+    // TODO: return status of the light(s) in res
+    const propScriptPath = scriptPath + "hueGetProperties.py";
+    const level = req.params.level
+
+    let scriptVarsList = [propScriptPath, level]
+
+    runScript(scriptVarsList)
+    .then((response) => {
+        const jsonData=JSON.stringify(response)
+        res.send(jsonData)    
     })
 })
 

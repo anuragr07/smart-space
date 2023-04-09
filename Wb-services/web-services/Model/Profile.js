@@ -25,7 +25,7 @@ const profileSchema = new mongoose.Schema({
       }]
     }]
   }]
-}, {collection: "Rooms"});
+}, {collection: "Profile"});
 
 const Profile = mongoose.model('Profile', profileSchema);
 
