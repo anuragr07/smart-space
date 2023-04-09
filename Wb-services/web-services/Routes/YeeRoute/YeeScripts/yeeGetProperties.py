@@ -4,6 +4,7 @@
 from yeelight import discover_bulbs
 from yeelight import Bulb
 from Yee_Attributes import YeeAttributes
+import json
 # # from pydub import AudioSegment
 # # from pydub.playback import play
 # from yeelight import Flow
@@ -13,7 +14,12 @@ from Yee_Attributes import YeeAttributes
 import yeelight
 print(yeelight.__version__)
 
-# from yeelight import SceneClass
+# convert rgb to rgbv
+def getRGBList(rgb_string):
+    red = int(rgb_string[0:2], 16)
+    green = int(rgb_string[2:4], 16)
+    blue = int(rgb_string[4:6], 16)
+    return [red, green, blue]
 
 
 number_of_yee_bulbs=discover_bulbs()
@@ -25,13 +31,22 @@ properties = bulb.get_properties()
 
 # rgbv=bulb.get_properties("power")
 
-# print the properties
-# print (rgbv)
-print(properties)
+status = ""
+if properties["power"] == "on":
+    status = "On"
+else:
+    status = "Off"
 
-# rgb_value = '16711680'
-# red = (int(rgb_value) >> 16) & 0xff
-# green = (int(rgb_value) >> 8) & 0xff
-# blue = int(rgb_value) & 0xff
-# rgb_list = [red, green, blue]
-# print(rgb_list)
+props = {
+    "device_id": 6,
+    "device_name": "Yeelight Bulb",
+    "status": status,
+    "ip": ip_address,
+    "settings": {
+        "Brightness": properties["bright"],
+        "rgbv": getRGBList(properties["rgb"])
+    } 
+}
+
+json_object = json.dumps(props)
+print(json_object)
