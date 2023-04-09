@@ -43,6 +43,7 @@ router.get('/props/:name', (req, res) => {
   runScript(scriptVarsList)
   .then((response) => {
       // Send Response
+      res.setHeader('Content-Type', 'application/json')
       res.send(response)
   })
 })
