@@ -10,7 +10,7 @@ router.get('/props', (req, res) => {
     const propScriptPath = scriptPath + "hueGetProperties.py";
     
     let scriptVarsList = [propScriptPath]
-
+    
     runScript(scriptVarsList)
     .then((response) => {
         res.status(200).json(response)

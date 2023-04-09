@@ -25,6 +25,7 @@ printFlag = False
 try:
     # Print the properties of each light
     for light in lights:    
+        props = ""
         props = props + "{name:" + light.name
         props = props + ",status:" + str(light.on)
         props = props + ",brightness:" + str(light.brightness)

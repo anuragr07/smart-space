@@ -21,9 +21,10 @@ async function getStatusOfDevices() {
 
     switch (device) {
         case "hue":
-            const scriptPath = "../../Routes/HueRoute/HueScripts/hueGetProperties.py";
+            const hueScriptPath = "../../Routes/HueRoute/HueScripts/hueGetProperties.py";
+            // const hueProps = 
 
-            let props = runScript(scriptPath)
+            let properties = runScript(scriptPath)
             break;
     
         default:
