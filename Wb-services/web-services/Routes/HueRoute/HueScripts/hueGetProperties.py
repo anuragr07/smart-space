@@ -2,6 +2,7 @@ from phue import Bridge
 import os
 from dotenv import load_dotenv, find_dotenv
 import sys
+import json
 
 # Convert CIE xy color to RGB
 load_dotenv(find_dotenv())
@@ -54,17 +55,31 @@ try:
     # Print the properties of each light
     for light in lights:   
         
+        # convert xy to rgb values
         rgb = xyBriToRgb(light.xy[0], light.xy[1], light.brightness)
         
+        # get device id method
+        def getDeviceId(argument):
+            if argument == 'Hue Light-1':
+                device_id = 3
+            elif argument == 'Hue Light-2':
+                device_id = 4
+            elif argument == 'Hue Light-3':
+                device_id = 5
+            else:
+                device_id = 3
+            return device_id
+
+        # props of hue light
         props = {
-            'name': light.name,
+            'device_id': getDeviceId(light.name),
+            'device_name': light.name,
             'status': str(light.on),
-            'ip': bridge_ip,
-            'bri': str(light.brightness),
-            'rgb': rgb,
-            'color_x': light.xy[0],
-            'color_y': light.xy[1],
-            'light_id': light.light_id
+            'settings': {
+                'Brightness': str(light.brightness),
+                'rgbv': rgb
+            }
+            
         }
         # props = props + "{name:" + light.name
         # props = props + ",status:" + str(light.on)
@@ -79,13 +94,17 @@ try:
 
         
         if light.name == lightName:
-            print(props)
+            #Convert dictionary to JSON
+            json_object = json.dumps(props)
+            print(json_object)
+            
             printFlag = True
         else:
             lightList.append(props)
         
     if printFlag == False:
-        print(lightList)
+        json_object = json.dumps(lightList)
+        print(json_object)
 
 except Exception as e:
     # Handle the error here
