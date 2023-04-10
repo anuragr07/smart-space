@@ -64,7 +64,7 @@ router.post('/off', (req, res) => {
     .then((response) => {
         // Send Response
         res.send(response)
-    })    
+    })
 })
 
 router.get('/printLines', (req, res) => {
