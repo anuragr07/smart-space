@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const logTableSchema = new mongoose.Schema({
+const kitchenTableSchema = new mongoose.Schema({
   username: { type: String, required: true },
   status: { type: String, enum: ['On', 'Off'], default: 'Off' },
   total_energy: { type: Number, default: 0 },
-}, {collection: "LogTable"});
+}, {collection: "KitchenTable"});
 
-const LogTable = mongoose.model('LogTable', logTableSchema);
+const KitchenTable = mongoose.model('KitchenTable', kitchenTableSchema);
 
-module.exports = LogTable;
+module.exports = KitchenTable;

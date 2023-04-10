@@ -21,8 +21,11 @@ const UserRouter = require("./Routes/UserRoute/UserRoute")
 // profile router
 const ProfileRouter = require("./Routes/ProfileRoute/ProfileRoute")
 
-// logtable router
-const LogTableRouter = require("./Routes/LogTableRoute/LogTableRoute")
+// KitchenTable router
+const KitchenTableRouter = require("./Routes/KitchenTableRoute/KitchenTableRoute")
+
+// LaundryTable router
+const LaundryTableRouter = require("./Routes/LaundryTableRoute/LaundryTableRoute")
 
 // Use Routers
 app.use('/yee', YeeRouter)
@@ -30,7 +33,8 @@ app.use('/hue', HueRouter)
 app.use('/shelly', ShellyRouter)
 app.use('/user', UserRouter)
 app.use('/profile', ProfileRouter)
-app.use('/logs', LogTableRouter)
+app.use('/kitchen', KitchenTableRouter)
+app.use('/laundry', LaundryTableRouter)
 
 // Listen app and connect the DB
 app.listen(PORT, function () {

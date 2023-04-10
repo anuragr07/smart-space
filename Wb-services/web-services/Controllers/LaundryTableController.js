@@ -1,9 +1,9 @@
-const LogTable = require("../Model/LogTable")
+const LaundryTable = require("../Model/LaundryTable")
 
 // This will return latest 3 log enteries
-exports.getLatestLogTableEntries = async (req, res) => {
+exports.getLatestLaundryTableEntries = async (req, res) => {
     try {
-        const totalConsumption = await LogTable.find()
+        const totalConsumption = await LaundryTable.find()
         let consumptionList = []
         let lastConsumption = 0;
 
@@ -13,7 +13,6 @@ exports.getLatestLogTableEntries = async (req, res) => {
             let consumption = item.total_energy - lastConsumption 
             
             if(item.username === req.params.username) {
-                console.log("Total:" + item.username + " = " + consumption);
                 energyObj = {
                     username: item.username,
                     consumption: consumption
@@ -40,7 +39,7 @@ exports.getLatestLogTableEntries = async (req, res) => {
 // 
 exports.getTotalEnergyAllUsers = async (req, res) => {
     try {
-        const totalConsumption = await LogTable.find()
+        const totalConsumption = await LaundryTable.find()
         let energyUsed = []
         let energyObj = {}
         let lastConsumption = 0;
