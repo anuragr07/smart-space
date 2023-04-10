@@ -99,7 +99,7 @@ exports.getTotalEnergyAllUsers = async (req, res) => {
 exports.turnOnKitchen = async (req, res) => {
     try {
         // Run on script
-        const response = await fetch(`http://${LOCAL}/shelly/on/Shelly%20Smart%20Plug-1`);
+        const response = await fetch(`http://${API_IP}/shelly/on/Shelly%20Smart%20Plug-1`);
         try {
             const data = await response.json()
             res.status(200).send(data)
@@ -123,7 +123,7 @@ exports.turnOffKitchen = async (req, res) => {
         let config;
 
         // Run off script
-        const response = await fetch(`http://${LOCAL}/shelly/off/Shelly%20Smart%20Plug-1`);
+        const response = await fetch(`http://${API_IP}/shelly/off/Shelly%20Smart%20Plug-1`);
         try {
             const data = await response.json()
             status = data;
@@ -132,7 +132,7 @@ exports.turnOffKitchen = async (req, res) => {
         }
 
         // Run get config script
-        const configRes = await fetch(`http://${LOCAL}/shelly/status/Shelly%20Smart%20Plug-1`);
+        const configRes = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`);
         try {
             const data = await configRes.json()
             config = data;
