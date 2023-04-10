@@ -1,70 +1,142 @@
 const Profile = require("../Model/Profile")
 const API_IP='174.6.73.177:3000'
-const axios = require('axios')
+const fetch = require('node-fetch')
+
+// const axios = require('axios')
+// import axios from 'axios';
 
 exports.getProfileByUserId = async (req, res) => {
     try {
         const user_id = req.params.id;
         const profile = await Profile.findOne({ user_id: user_id });
 
-
-        const rooms = profile.room;
-        try {
-            // Loop for rooms
-            for (let i = 0; i < rooms.length; i++) {
-
-                
-                // To get the device from the room
-                const devices = rooms[i].device;
-                let deviceProps;
-                for (let j = 0; j < devices.length; j++) {
-                    switch (devices[j].device_name) {
-                        case "Shelly Smart Plug-1": 
-                            axios.get(`https://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`)
-                            .then((response) => {
-                                console.log(response);
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            })
-                            // console.log(deviceProps);
-                            break;
-
-                        case "Shelly Smart Plug-2":
-                            deviceProps = `https://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`
-                            console.log(deviceProps);
-                            break;
-
-                        case "Hue Light-1":
-                            const hueProps = axios.get("https://176.")
-                            break;
-                        
-                        case "Hue Light-2":
-                    
-                            break;
-
-                        case "Hue Light-3":
-                    
-                            break;
-
-                        case "Yeelight Bulb":
-
-                            break;
-
-                        default: 
-                            break;
-                    }
-                }
-            
-            }
-        } catch (error) {
-            return res.status(404).json({ eror: error })
-        }
-
-
         if (!profile) {
             return res.status(404).json({ error: "Profile not found" });
         }
+
+        // const rooms = profile.room;
+        // try {
+        //     // Loop for rooms
+        //     for (let i = 0; i < rooms.length; i++) {
+
+                
+        //         // To get the device from the room
+        //         const devices = rooms[i].device;
+
+        //         for (let j = 0; j < devices.length; j++) {
+
+        //             // switch case to go through each device available in the room
+        //             switch (devices[j].device_name) {
+        //                 case "Shelly Smart Plug-1": 
+
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`);
+        //                         const data = await response.json();
+        //                         console.log(data);
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Shelly Smart Plug-2":
+                            
+        //                 // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-2`);
+        //                         const data = await response.json();
+        //                         console.log(data);
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Hue Light-1":
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-1`);
+        //                         const data = await response.json();
+        //                         console.log(data);
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+                        
+        //                 case "Hue Light-2":
+                    
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-2`);
+        //                         const data = await response.json();
+        //                         console.log(data);
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Hue Light-3":
+                    
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-3`);
+        //                         const data = await response.json();
+        //                         console.log(data);
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Yeelight Bulb":
+
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/yee/props/Yeelight%20Bulb`);
+        //                         const data = await response.json();
+        //                         console.log(data);
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 default: 
+
+        //                     console.log(devices[j])
+        //                     break;
+        //             }
+        //         }
+
+        //         // Store devices back in profile
+        //         rooms[i].device = devices
+            
+        //     }
+        // } catch (error) {
+        //    console.log({ error: error })
+        // }
+
+        // // Store rooms back in profile
+        // profile.room = rooms
+
+        // console.log(profile);
+
+        // // const newProfile = await Profile.findOneAndUpdate({ user_id: user_id }, profile)
 
         return res.json({ profile });
     } catch (error) {
@@ -99,6 +171,129 @@ exports.getRoomByUserId = async (req, res) => {
         }
 
         const rooms = profile.room;
+        // try {
+        //     // Loop for rooms
+        //     for (let i = 0; i < rooms.length; i++) {
+
+                
+        //         // To get the device from the room
+        //         const devices = rooms[i].device;
+
+        //         for (let j = 0; j < devices.length; j++) {
+
+        //             // switch case to go through each device available in the room
+        //             switch (devices[j].device_name) {
+        //                 case "Shelly Smart Plug-1": 
+
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Shelly Smart Plug-2":
+                            
+        //                 // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-2`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Hue Light-1":
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-1`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+                        
+        //                 case "Hue Light-2":
+                    
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-2`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Hue Light-3":
+                    
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-3`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Yeelight Bulb":
+
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/yee/props/Yeelight%20Bulb`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 default: 
+
+        //                     console.log(devices[j])
+        //                     break;
+        //             }
+        //         }
+
+        //         // Store devices back in profile
+        //         rooms[i].device = devices
+
+        //         console.log(devices);
+        //         // To get the room using params
+        //         if (rooms[i].room_name === req.params.roomname) {
+        //             return res.json(rooms[i])
+        //         }
+            
+        //     }
+        // } catch (error) {
+        //    console.log({ error: error })
+        // }
+
+        // Store this profile on db
 
         try {
             // loop for rooms
@@ -130,6 +325,122 @@ exports.getDeviceByRoom = async (req, res) => {
         if (!profile) {
             return res.status(404).json({ error: "Profile not found" });
         }
+
+        // const rooms = profile.room;
+        // try {
+        //     // Loop for rooms
+        //     for (let i = 0; i < rooms.length; i++) {
+
+                
+        //         // To get the device from the room
+        //         const devices = rooms[i].device;
+
+        //         for (let j = 0; j < devices.length; j++) {
+
+        // //             // switch case to go through each device available in the room
+        // //             switch (devices[j].device_name) {
+        //                 case "Shelly Smart Plug-1": 
+
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-1`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Shelly Smart Plug-2":
+                            
+        //                 // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/shelly/status/Shelly%20Smart%20Plug-2`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Hue Light-1":
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-1`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+                        
+        //                 case "Hue Light-2":
+                    
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-2`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Hue Light-3":
+                    
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/hue/props/Hue%20Light-3`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 case "Yeelight Bulb":
+
+        //                     // This will fetch the live data and replace the device in the obj
+        //                     try {
+        //                         const response = await fetch(`http://${API_IP}/yee/props/Yeelight%20Bulb`);
+        //                         const data = await response.json();
+                                
+        //                         devices[j] = data;
+
+        //                     } catch (error) {
+        //                         console.log(error);
+        //                     }
+
+        //                     break;
+
+        //                 default: 
+
+        //                     console.log(devices[j])
+        //                     break;
+        //             }
+        //         }
+
+        //         // Store devices back in profile
+        //         rooms[i].device = devices            
+        //     }
+        // } catch (error) {
+        //    console.log({ error: error })
+        // }
 
         const rooms = profile.room;
         console.log(req.params.device);

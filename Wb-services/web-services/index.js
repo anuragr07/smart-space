@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const PORT = 3000;
 
+
 const uri = "mongodb+srv://arpiegrover:Arpie1996@picluster.u3qwjlc.mongodb.net/SmartSpace";
 
 // yee router

@@ -8,6 +8,8 @@ load_dotenv(find_dotenv())
 
 shelly_ip = "10.0.0.217"
 
+device_id = 0
+
 # set the IP address of your Shelly smart plug
 if sys.argv[1] == "Shelly Smart Plug-1":
     shelly_ip = os.getenv("SHELLY_IP_1")

@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^5.13.16",
+    "node-fetch": "^2.6.9",
     "node-yeelight-wifi": "^0.1.4",
     "yeelight-node": "^1.1.6"
   },
