@@ -85,7 +85,3 @@ json_object = json.dumps(data)
 
 print(json_object)
 
-# data = response.json()
-
-
-# print(data)

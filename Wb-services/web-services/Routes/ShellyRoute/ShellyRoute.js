@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const {spawn} = require('child_process')
+const {spawn} = require('child_process');
+const { error } = require('console');
 
 const scriptPath = 'Routes/ShellyRoute/ShellyScripts/';
 
@@ -31,15 +32,15 @@ router.get('/toggle', (req, res) => {
     })
 })
 
-router.post('/on', (req, res) => {
+router.get('/on/:plug', (req, res) => {
     // Script path
     const turnOnScriptPath = scriptPath + 'ShellyOn.py'
 
-    // Script vars
-    // const lightId = req.params.id;
+    // Script vars - plug name
+    const plugName = req.params.plug
     
     // create list of vars
-    let scriptVarsList = [turnOnScriptPath]
+    let scriptVarsList = [turnOnScriptPath, plugName]
     
     // Run script
     runScript(scriptVarsList)
@@ -47,23 +48,29 @@ router.post('/on', (req, res) => {
         // Send Response
         res.send(response)
     })    
+    .catch((error) => {
+        res.send(error)
+    })
 })
 
-router.post('/off', (req, res) => {
+router.get('/off/:plug', (req, res) => {
     // Script path
     const turnOffScriptPath = scriptPath + 'ShellyOff.py'
 
-    // Script vars
-    // const lightId = req.params.id;
+    // Script vars - plug name
+    const plugName = req.params.plug
     
     // create list of vars
-    let scriptVarsList = [turnOffScriptPath]
+    let scriptVarsList = [turnOffScriptPath, plugName]
     
     // Run script
     runScript(scriptVarsList)
     .then((response) => {
         // Send Response
         res.send(response)
+    })    
+    .catch((error) => {
+        res.send(error)
     })
 })
 

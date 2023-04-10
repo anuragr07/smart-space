@@ -1,5 +1,8 @@
 const KitchenTable = require("../Model/KitchenTable")
 
+const API_IP = "174.6.73.177:3000"
+const LOCAL = "localhost:3000"
+
 // This will return latest 3 log enteries
 exports.getLatestKitchenTableEntries = async (req, res) => {
     try {
@@ -36,7 +39,7 @@ exports.getLatestKitchenTableEntries = async (req, res) => {
     }
 };
 
-// 
+// This will return total consumption of every user
 exports.getTotalEnergyAllUsers = async (req, res) => {
     try {
         const totalConsumption = await KitchenTable.find()
@@ -91,3 +94,71 @@ exports.getTotalEnergyAllUsers = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+// Turn on the shelly switch
+exports.turnOnKitchen = async (req, res) => {
+    try {
+        // Run on script
+        const response = await fetch(`http://${LOCAL}/shelly/on/Shelly%20Smart%20Plug-1`);
+        try {
+            const data = await response.json()
+            res.status(200).send(data)
+            console.log(data);   
+        } catch (error) {
+            console.log("Inside" + error);
+        }
+
+        // Submit data on profile
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error while turning on kitche")
+    }
+}
+
+// Turn off the shelly switch
+exports.turnOffKitchen = async (req, res) => {
+    try {
+
+        let status;
+        let config;
+
+        // Run off script
+        const response = await fetch(`http://${LOCAL}/shelly/off/Shelly%20Smart%20Plug-1`);
+        try {
+            const data = await response.json()
+            status = data;
+        } catch (error) {
+            console.log("Inside" + error);
+        }
+
+        // Run get config script
+        const configRes = await fetch(`http://${LOCAL}/shelly/status/Shelly%20Smart%20Plug-1`);
+        try {
+            const data = await configRes.json()
+            config = data;
+        } catch (error) {
+            console.log("Inside" + error);
+        }
+
+        let total_energy = config.settings.total_energy
+
+        await KitchenTable.create({
+            username: req.params.username,
+            status: "Off",
+            total_energy: total_energy
+        },
+            function (err, table) {
+                if (err) return res.status(500).send({ mresponsesg: false });
+                res.status(200).send(table);
+            }
+        )
+        console.log(config);
+        // Send status
+        // res.status(200).send(status)
+        
+        // Submit data on profile
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error while turning off kitchen")
+    }
+}
